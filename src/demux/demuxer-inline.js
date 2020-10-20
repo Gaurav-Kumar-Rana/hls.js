@@ -27,7 +27,10 @@ try {
   now = global.performance.now.bind(global.performance);
 } catch (err) {
   logger.debug('Unable to use Performance API on this environment');
-  now = global.Date.now;
+    //During test there is a chance that Date is not available in Node Plateform, so this check is requried to shop undefine property of now.
+    if(global.Date){
+    now = global.Date.now;
+  }
 }
 
 class DemuxerInline {
